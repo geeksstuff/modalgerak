@@ -13,124 +13,50 @@
     }
   </script>
   <style>
-    ::selection { background: #2d8a4e; color: #fff; }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-    select option { background: #fff; color: #1e293b; }
-
-    body {
-      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 20%, #e0f2fe 50%, #f0fdf4 80%, #f8fafc 100%);
-      min-height: 100vh;
-    }
-    body::before {
-      content: '';
-      position: fixed; top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(45, 138, 78, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(26, 48, 80, 0.06) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.05) 0%, transparent 40%);
-      pointer-events: none; z-index: 0;
-    }
-    body > * { position: relative; z-index: 1; }
-
-    /* Loading overlay */
-    #loadingOverlay {
-      position: fixed; inset: 0; z-index: 9999;
-      background: linear-gradient(135deg, #f0fdf4, #ecfdf5, #e0f2fe);
-      display: flex; align-items: center; justify-content: center;
-      transition: opacity 0.4s ease;
-    }
-    #loadingOverlay.fade-out { opacity: 0; pointer-events: none; }
-    @keyframes spinLogo { 0% { transform: scale(0.8); opacity: 0.3; } 50% { transform: scale(1); opacity: 1; } 100% { transform: scale(0.8); opacity: 0.3; } }
-    .loading-pulse { animation: spinLogo 1.5s ease-in-out infinite; }
-
-    .glass-card {
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06);
-    }
-    .glass-card:hover { box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.08); }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #2d8a4e 0%, #1a6b33 100%);
-      box-shadow: 0 4px 20px rgba(45, 138, 78, 0.25);
-    }
-    .btn-primary:hover { background: linear-gradient(135deg, #258040 0%, #155528 100%); box-shadow: 0 6px 24px rgba(45, 138, 78, 0.35); }
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid #e2e8f0;
-      backdrop-filter: blur(10px);
-    }
-    .btn-secondary:hover { border-color: #cbd5e1; background: rgba(255, 255, 255, 0.9); }
-    .form-input {
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid #e2e8f0;
-      color: #1e293b;
-      transition: all 0.2s;
-      backdrop-filter: blur(8px);
-    }
-    .form-input:focus { border-color: #2d8a4e; outline: none; box-shadow: 0 0 0 3px rgba(45, 138, 78, 0.1); }
-    .form-input::placeholder { color: #94a3b8; }
-    .pill-btn {
-      border: 1px solid #e2e8f0; color: #64748b;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(8px); transition: all 0.2s;
-    }
-    .pill-btn:hover { border-color: #cbd5e1; color: #475569; background: rgba(255, 255, 255, 0.8); }
-    .pill-btn.active { border-color: #2d8a4e; background: rgba(45, 138, 78, 0.1); color: #1a6b33; box-shadow: 0 0 0 1px rgba(45, 138, 78, 0.2); }
-    .toggle-card {
-      border: 1px solid #e2e8f0; background: rgba(255, 255, 255, 0.5);
-      color: #94a3b8; backdrop-filter: blur(8px); transition: all 0.2s;
-    }
-    .toggle-card:hover { border-color: #cbd5e1; color: #64748b; background: rgba(255, 255, 255, 0.8); }
-    .toggle-card.active { border-color: #2d8a4e; background: rgba(45, 138, 78, 0.08); color: #1a6b33; box-shadow: 0 4px 16px rgba(45, 138, 78, 0.1); }
-    .platform-btn {
-      border: 1px solid #e2e8f0; background: rgba(255, 255, 255, 0.5);
-      color: #64748b; backdrop-filter: blur(8px); transition: all 0.2s;
-    }
-    .platform-btn.active { border-color: #2d8a4e; background: rgba(45, 138, 78, 0.1); color: #1a6b33; }
-    .section-number { background: linear-gradient(135deg, #2d8a4e 0%, #1a6b33 100%); box-shadow: 0 2px 8px rgba(45, 138, 78, 0.3); }
-    .result-panel {
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
-    }
-
-    /* User menu */
-    .user-menu-btn {
-      background: rgba(255, 255, 255, 0.6); border: 1px solid #e2e8f0;
-      backdrop-filter: blur(12px); transition: all 0.2s;
-    }
-    .user-menu-btn:hover { background: rgba(255, 255, 255, 0.9); border-color: #cbd5e1; }
-    .user-dropdown {
-      background: rgba(255, 255, 255, 0.9); border: 1px solid #e2e8f0;
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
-    }
-    .user-dropdown a, .user-dropdown button {
-      transition: background 0.15s;
-    }
-    .user-dropdown a:hover, .user-dropdown button:hover {
-      background: rgba(45, 138, 78, 0.06);
-    }
-
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
-    .animate-in { animation: fadeInUp 0.5s ease-out both; }
-    .animate-pulse-custom { animation: pulse 1.5s infinite; }
-    .custom-audience-enter { animation: slideDown 0.25s ease-out; }
-    @keyframes slideDown { from { opacity: 0; max-height: 0; margin-top: 0; } to { opacity: 1; max-height: 100px; margin-top: 12px; } }
-    @keyframes dropdownIn { from { opacity: 0; transform: translateY(-8px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-    .dropdown-enter { animation: dropdownIn 0.2s ease-out; }
+    ::selection{background:#2d8a4e;color:#fff}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#f1f5f9}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+    select option{background:#fff;color:#1e293b}
+    body{background:linear-gradient(135deg,#f0fdf4 0%,#ecfdf5 20%,#e0f2fe 50%,#f0fdf4 80%,#f8fafc 100%);min-height:100vh}
+    body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 20% 20%,rgba(45,138,78,0.08) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(26,48,80,0.06) 0%,transparent 50%),radial-gradient(circle at 50% 50%,rgba(74,222,128,0.05) 0%,transparent 40%);pointer-events:none;z-index:0}
+    body>*{position:relative;z-index:1}
+    #loadingOverlay{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#f0fdf4,#ecfdf5,#e0f2fe);display:flex;align-items:center;justify-content:center;transition:opacity 0.4s ease}
+    #loadingOverlay.fade-out{opacity:0;pointer-events:none}
+    @keyframes spinLogo{0%{transform:scale(0.8);opacity:0.3}50%{transform:scale(1);opacity:1}100%{transform:scale(0.8);opacity:0.3}}
+    .loading-pulse{animation:spinLogo 1.5s ease-in-out infinite}
+    .glass-card{background:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 4px 30px rgba(0,0,0,0.04),0 1px 3px rgba(0,0,0,0.06)}
+    .glass-card:hover{box-shadow:0 8px 40px rgba(0,0,0,0.06),0 2px 6px rgba(0,0,0,0.08)}
+    .btn-primary{background:linear-gradient(135deg,#2d8a4e 0%,#1a6b33 100%);box-shadow:0 4px 20px rgba(45,138,78,0.25)}
+    .btn-primary:hover{background:linear-gradient(135deg,#258040 0%,#155528 100%);box-shadow:0 6px 24px rgba(45,138,78,0.35)}
+    .btn-secondary{background:rgba(255,255,255,0.7);border:1px solid #e2e8f0;backdrop-filter:blur(10px)}
+    .btn-secondary:hover{border-color:#cbd5e1;background:rgba(255,255,255,0.9)}
+    .form-input{background:rgba(255,255,255,0.7);border:1px solid #e2e8f0;color:#1e293b;transition:all 0.2s;backdrop-filter:blur(8px)}
+    .form-input:focus{border-color:#2d8a4e;outline:none;box-shadow:0 0 0 3px rgba(45,138,78,0.1)}
+    .form-input::placeholder{color:#94a3b8}
+    .pill-btn{border:1px solid #e2e8f0;color:#64748b;background:rgba(255,255,255,0.5);backdrop-filter:blur(8px);transition:all 0.2s}
+    .pill-btn:hover{border-color:#cbd5e1;color:#475569;background:rgba(255,255,255,0.8)}
+    .pill-btn.active{border-color:#2d8a4e;background:rgba(45,138,78,0.1);color:#1a6b33;box-shadow:0 0 0 1px rgba(45,138,78,0.2)}
+    .toggle-card{border:1px solid #e2e8f0;background:rgba(255,255,255,0.5);color:#94a3b8;backdrop-filter:blur(8px);transition:all 0.2s}
+    .toggle-card:hover{border-color:#cbd5e1;color:#64748b;background:rgba(255,255,255,0.8)}
+    .toggle-card.active{border-color:#2d8a4e;background:rgba(45,138,78,0.08);color:#1a6b33;box-shadow:0 4px 16px rgba(45,138,78,0.1)}
+    .platform-btn{border:1px solid #e2e8f0;background:rgba(255,255,255,0.5);color:#64748b;backdrop-filter:blur(8px);transition:all 0.2s}
+    .platform-btn.active{border-color:#2d8a4e;background:rgba(45,138,78,0.1);color:#1a6b33}
+    .section-number{background:linear-gradient(135deg,#2d8a4e 0%,#1a6b33 100%);box-shadow:0 2px 8px rgba(45,138,78,0.3)}
+    .result-panel{background:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 4px 30px rgba(0,0,0,0.04)}
+    .user-menu-btn{background:rgba(255,255,255,0.6);border:1px solid #e2e8f0;backdrop-filter:blur(12px);transition:all 0.2s}
+    .user-menu-btn:hover{background:rgba(255,255,255,0.9);border-color:#cbd5e1}
+    .user-dropdown{background:rgba(255,255,255,0.9);border:1px solid #e2e8f0;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 12px 40px rgba(0,0,0,0.1),0 2px 8px rgba(0,0,0,0.06)}
+    .user-dropdown a,.user-dropdown button{transition:background 0.15s}
+    .user-dropdown a:hover,.user-dropdown button:hover{background:rgba(45,138,78,0.06)}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    .animate-in{animation:fadeInUp 0.5s ease-out both}
+    .custom-audience-enter{animation:slideDown 0.25s ease-out}
+    @keyframes slideDown{from{opacity:0;max-height:0;margin-top:0}to{opacity:1;max-height:100px;margin-top:12px}}
+    @keyframes dropdownIn{from{opacity:0;transform:translateY(-8px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+    .dropdown-enter{animation:dropdownIn 0.2s ease-out}
   </style>
 </head>
 <body class="min-h-screen font-sans text-slate-800">
 
-  <!-- Loading Overlay -->
   <div id="loadingOverlay">
     <div class="text-center">
       <img src="logo.png" alt="" class="h-16 mx-auto loading-pulse mb-4" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2248%22 height=%2248%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%232d8a4e%22 stroke-width=%222%22><path d=%22M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5%22/></svg>'" />
@@ -138,21 +64,18 @@
     </div>
   </div>
 
-  <!-- Top Navigation Bar -->
   <nav class="sticky top-0 z-50 px-4 py-3" style="background:rgba(255,255,255,0.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(226,232,240,0.6);">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
         <img src="logo.png" alt="ModalGerak" class="h-8" onerror="this.style.display='none'" />
         <span class="text-sm font-bold text-slate-700 hidden sm:inline">AI Landing Page Generator</span>
       </div>
-      <!-- User Menu -->
-      <div class="relative">
-        <button onclick="toggleUserMenu()" class="user-menu-btn flex items-center gap-2.5 px-3 py-2 rounded-xl cursor-pointer">
+      <div class="relative" id="userMenuWrapper">
+        <button id="userMenuBtn" class="user-menu-btn flex items-center gap-2.5 px-3 py-2 rounded-xl cursor-pointer">
           <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:linear-gradient(135deg,#2d8a4e,#1a6b33);" id="userAvatar">?</div>
           <span class="text-sm font-semibold text-slate-600 hidden sm:inline max-w-[160px] truncate" id="userEmail">Loading...</span>
           <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
         </button>
-        <!-- Dropdown -->
         <div id="userDropdown" class="user-dropdown hidden absolute right-0 top-full mt-2 w-64 rounded-2xl overflow-hidden py-2 dropdown-enter">
           <div class="px-4 py-3 border-b border-slate-100">
             <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Akun Anda</p>
@@ -163,7 +86,7 @@
             Ubah Password
           </a>
           <div class="border-t border-slate-100 mt-1 pt-1">
-            <button onclick="handleLogout()" class="flex items-center gap-3 px-4 py-3 text-sm text-red-500 font-medium w-full text-left cursor-pointer bg-transparent border-none">
+            <button id="logoutBtn" class="flex items-center gap-3 px-4 py-3 text-sm text-red-500 font-medium w-full text-left cursor-pointer bg-transparent border-none">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/></svg>
               Keluar
             </button>
@@ -173,115 +96,56 @@
     </div>
   </nav>
 
-  <!-- Main App Content (hidden until auth check) -->
   <div id="appContent" class="hidden">
-
-    <!-- Header -->
     <header class="text-center pt-8 pb-6 px-4">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight" style="background: linear-gradient(135deg, #1a3050 0%, #2d8a4e 50%, #4ade80 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-        AI Copywriting & Landing Page Generator
-      </h1>
-      <p class="text-slate-500 text-base mt-3 max-w-xl mx-auto">
-        Ciptakan struktur copywriting persuasif dan layout landing page premium dalam hitungan detik.
-      </p>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight" style="background:linear-gradient(135deg,#1a3050 0%,#2d8a4e 50%,#4ade80 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">AI Copywriting & Landing Page Generator</h1>
+      <p class="text-slate-500 text-base mt-3 max-w-xl mx-auto">Ciptakan struktur copywriting persuasif dan layout landing page premium dalam hitungan detik.</p>
     </header>
-
-    <!-- Main Grid -->
     <main class="max-w-7xl mx-auto px-4 pb-20">
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 items-start">
-
-        <!-- LEFT COLUMN -->
         <div class="space-y-0 animate-in">
 
           <!-- 1 -->
           <div class="glass-card rounded-2xl p-6 mb-6">
-            <div class="flex items-start gap-4 mb-6">
-              <div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">1</div>
-              <div><h2 class="text-xl font-bold text-slate-800">Framework & Tone</h2><p class="text-sm text-slate-500 mt-1">Tentukan struktur psikologi dan gaya bahasa copywriting.</p></div>
-            </div>
+            <div class="flex items-start gap-4 mb-6"><div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">1</div><div><h2 class="text-xl font-bold text-slate-800">Framework & Tone</h2><p class="text-sm text-slate-500 mt-1">Tentukan struktur psikologi dan gaya bahasa copywriting.</p></div></div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Pilih Framework <span class="text-green-600">*</span></label>
-                <select id="framework" class="form-input w-full px-4 py-3 rounded-xl text-sm" onchange="updateFrameworkHint()">
-                  <option value="PAS (Problem–Agitate–Solution)">PAS (Problem–Agitate–Solution) (Winrate: 98%)</option>
-                  <option value="AIDA (Attention, Interest, Desire, Action)">AIDA (Winrate: 95%)</option>
-                  <option value="AIDCA (Attention, Interest, Desire, Conviction, Action)">AIDCA (Winrate: 92%)</option>
-                  <option value="BAB (Before-After-Bridge)">BAB (Winrate: 90%)</option>
-                  <option value="QUEST (Qualify, Understand, Educate, Stimulate, Transition)">QUEST (Winrate: 88%)</option>
-                  <option value="4Ps (Promise, Picture, Proof, Push)">4Ps (Winrate: 85%)</option>
-                  <option value="FAB (Features, Advantages, Benefits)">FAB (Winrate: 82%)</option>
-                  <option value="HSO (Hook, Story, Offer)">HSO (Winrate: 94%)</option>
-                </select>
+                <select id="framework" class="form-input w-full px-4 py-3 rounded-xl text-sm"><option value="PAS (Problem–Agitate–Solution)">PAS (Winrate: 98%)</option><option value="AIDA (Attention, Interest, Desire, Action)">AIDA (Winrate: 95%)</option><option value="AIDCA (Attention, Interest, Desire, Conviction, Action)">AIDCA (Winrate: 92%)</option><option value="BAB (Before-After-Bridge)">BAB (Winrate: 90%)</option><option value="QUEST (Qualify, Understand, Educate, Stimulate, Transition)">QUEST (Winrate: 88%)</option><option value="4Ps (Promise, Picture, Proof, Push)">4Ps (Winrate: 85%)</option><option value="FAB (Features, Advantages, Benefits)">FAB (Winrate: 82%)</option><option value="HSO (Hook, Story, Offer)">HSO (Winrate: 94%)</option></select>
                 <p id="frameworkHint" class="text-xs text-green-700 mt-2 italic">Sangat efektif untuk landing page jualan langsung.</p>
               </div>
               <div>
                 <label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Gaya Bahasa (Tone) <span class="text-green-600">*</span></label>
-                <select id="tone" class="form-input w-full px-4 py-3 rounded-xl text-sm">
-                  <option>Friendly & Conversational (Santai tapi sopan)</option><option>Empathetic & Caring (Peduli & Memahami)</option>
-                  <option>Witty & Humorous (Lucu & Menghibur)</option><option>Professional & Authority (Serius & Terpercaya)</option>
-                  <option>Minimalist & Elegant (Mewah & Eksklusif)</option><option>Storytelling & Emotional (Menyentuh & Bercerita)</option>
-                  <option>Urgent & Direct (To the point & Mendesak)</option><option>Bold & Aggressive (Berani & Menantang)</option>
-                </select>
+                <select id="tone" class="form-input w-full px-4 py-3 rounded-xl text-sm"><option>Friendly & Conversational (Santai tapi sopan)</option><option>Empathetic & Caring (Peduli & Memahami)</option><option>Witty & Humorous (Lucu & Menghibur)</option><option>Professional & Authority (Serius & Terpercaya)</option><option>Minimalist & Elegant (Mewah & Eksklusif)</option><option>Storytelling & Emotional (Menyentuh & Bercerita)</option><option>Urgent & Direct (To the point & Mendesak)</option><option>Bold & Aggressive (Berani & Menantang)</option></select>
               </div>
             </div>
           </div>
 
           <!-- 2 -->
           <div class="glass-card rounded-2xl p-6 mb-6">
-            <div class="flex items-start gap-4 mb-6">
-              <div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">2</div>
-              <div><h2 class="text-xl font-bold text-slate-800">Produk & Tujuan</h2><p class="text-sm text-slate-500 mt-1">Apa yang Anda jual dan apa goal utamanya?</p></div>
-            </div>
+            <div class="flex items-start gap-4 mb-6"><div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">2</div><div><h2 class="text-xl font-bold text-slate-800">Produk & Tujuan</h2><p class="text-sm text-slate-500 mt-1">Apa yang Anda jual dan apa goal utamanya?</p></div></div>
             <label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-3">Tipe Produk <span class="text-green-600">*</span></label>
             <div id="productTypeGrid" class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4"></div>
-            <div>
-              <label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Tujuan Utama (Goal) <span class="text-green-600">*</span></label>
-              <select id="goal" class="form-input w-full px-4 py-3 rounded-xl text-sm">
-                <option>Sales / Konversi (Beli Langsung)</option><option>Lead Generation (WA/Email/Form)</option>
-                <option>Webinar Registration</option><option>App Download / Install</option>
-                <option>Appointment / Booking</option><option>Free Trial Signup</option>
-              </select>
-            </div>
+            <div><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Tujuan Utama (Goal) <span class="text-green-600">*</span></label><select id="goal" class="form-input w-full px-4 py-3 rounded-xl text-sm"><option>Sales / Konversi (Beli Langsung)</option><option>Lead Generation (WA/Email/Form)</option><option>Webinar Registration</option><option>App Download / Install</option><option>Appointment / Booking</option><option>Free Trial Signup</option></select></div>
           </div>
 
           <!-- 3 -->
           <div class="glass-card rounded-2xl p-6 mb-6">
-            <div class="flex items-start gap-4 mb-6">
-              <div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">3</div>
-              <div><h2 class="text-xl font-bold text-slate-800">Target Market</h2><p class="text-sm text-slate-500 mt-1">Siapa audiens Anda dan seberapa tahu mereka?</p></div>
-            </div>
+            <div class="flex items-start gap-4 mb-6"><div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">3</div><div><h2 class="text-xl font-bold text-slate-800">Target Market</h2><p class="text-sm text-slate-500 mt-1">Siapa audiens Anda dan seberapa tahu mereka?</p></div></div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div>
-                <label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Level Awareness <span class="text-green-600">*</span></label>
-                <select id="awareness" class="form-input w-full px-4 py-3 rounded-xl text-sm">
-                  <option>Unaware (Belum sadar masalah)</option><option>Problem Aware (Sadar masalah)</option>
-                  <option selected>Solution Aware (Sadar masalah, cari solusi)</option><option>Product Aware (Sadar produk)</option><option>Most Aware (Siap beli)</option>
-                </select>
-              </div>
+              <div><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Level Awareness <span class="text-green-600">*</span></label><select id="awareness" class="form-input w-full px-4 py-3 rounded-xl text-sm"><option>Unaware (Belum sadar masalah)</option><option>Problem Aware (Sadar masalah)</option><option selected>Solution Aware (Sadar masalah, cari solusi)</option><option>Product Aware (Sadar produk)</option><option>Most Aware (Siap beli)</option></select></div>
               <div>
                 <label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Target Audience <span class="text-green-600">*</span></label>
-                <select id="audience" class="form-input w-full px-4 py-3 rounded-xl text-sm" onchange="toggleCustomAudience()">
-                  <option>Advertiser</option><option>Business Owner</option><option>Freelancer</option><option>Employee</option>
-                  <option>Student</option><option>Parent</option><option selected>Mahasiswa, Jobseeker, Interviewee</option>
-                  <option>Digital Marketer</option><option>Content Creator</option><option value="Custom">Custom</option>
-                </select>
-                <div id="customAudienceField" class="hidden">
-                  <input id="customAudience" type="text" class="form-input w-full px-4 py-3 rounded-xl text-sm mt-3" placeholder="Tulis target audience kustom Anda..." />
-                </div>
+                <select id="audience" class="form-input w-full px-4 py-3 rounded-xl text-sm"><option>Advertiser</option><option>Business Owner</option><option>Freelancer</option><option>Employee</option><option>Student</option><option>Parent</option><option selected>Mahasiswa, Jobseeker, Interviewee</option><option>Digital Marketer</option><option>Content Creator</option><option value="Custom">Custom</option></select>
+                <div id="customAudienceField" class="hidden"><input id="customAudience" type="text" class="form-input w-full px-4 py-3 rounded-xl text-sm mt-3" placeholder="Tulis target audience kustom Anda..." /></div>
               </div>
             </div>
-            <div>
-              <label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">3 Masalah Utama / Ketakutan Audiens (Pain Points)</label>
-              <textarea id="painPoints" rows="3" class="form-input w-full px-4 py-3 rounded-xl text-sm resize-y" placeholder="Cth: Takut boncos iklan, Gaptek, Tidak punya waktu..."></textarea>
-            </div>
+            <div><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">3 Masalah Utama / Ketakutan Audiens (Pain Points)</label><textarea id="painPoints" rows="3" class="form-input w-full px-4 py-3 rounded-xl text-sm resize-y" placeholder="Cth: Takut boncos iklan, Gaptek, Tidak punya waktu..."></textarea></div>
           </div>
 
           <!-- 4 -->
           <div class="glass-card rounded-2xl p-6 mb-6">
-            <div class="flex items-start gap-4 mb-6">
-              <div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">4</div>
-              <div><h2 class="text-xl font-bold text-slate-800">Detail Produk & Copy</h2><p class="text-sm text-slate-500 mt-1">Tentukan penawaran dan copywriting utama.</p></div>
-            </div>
+            <div class="flex items-start gap-4 mb-6"><div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">4</div><div><h2 class="text-xl font-bold text-slate-800">Detail Produk & Copy</h2><p class="text-sm text-slate-500 mt-1">Tentukan penawaran dan copywriting utama.</p></div></div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Nama Produk <span class="text-green-600">*</span></label><input id="productName" type="text" class="form-input w-full px-4 py-3 rounded-xl text-sm" placeholder="Contoh: Masterclass Copywriting" /></div>
               <div><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Harga Normal</label><input id="normalPrice" type="text" class="form-input w-full px-4 py-3 rounded-xl text-sm" placeholder="Rp 999.000" /></div>
@@ -289,10 +153,7 @@
             </div>
             <div class="mb-4"><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Deskripsi & Benefit Utama <span class="text-green-600">*</span></label><textarea id="description" rows="4" class="form-input w-full px-4 py-3 rounded-xl text-sm resize-y" placeholder="Tulis poin-poin utama keunggulan produk secara singkat..."></textarea></div>
             <div class="mb-4"><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Keberatan Utama (Kenapa Orang Ragu Beli?)</label><textarea id="objections" rows="3" class="form-input w-full px-4 py-3 rounded-xl text-sm resize-y" placeholder="Cth: Mahal, Takut tidak ngefek, Ribet..."></textarea></div>
-            <div class="mb-4">
-              <label class="flex items-center gap-3 cursor-pointer text-slate-600 text-sm"><input type="checkbox" id="hasBonus" class="accent-green-600 w-4 h-4" onchange="toggleBonusField()" /> Offer Stack / Bonus Details (Opsional) - <span class="text-green-700 font-semibold">Ada Bonus Tambahan?</span></label>
-              <div id="bonusField" class="mt-3 hidden"><textarea id="bonusDetails" rows="3" class="form-input w-full px-4 py-3 rounded-xl text-sm resize-y" placeholder="Detail bonus: nama, value, deskripsi singkat..."></textarea></div>
-            </div>
+            <div class="mb-4"><label class="flex items-center gap-3 cursor-pointer text-slate-600 text-sm"><input type="checkbox" id="hasBonus" class="accent-green-600 w-4 h-4" /> Offer Stack / Bonus Details (Opsional) - <span class="text-green-700 font-semibold">Ada Bonus Tambahan?</span></label><div id="bonusField" class="mt-3 hidden"><textarea id="bonusDetails" rows="3" class="form-input w-full px-4 py-3 rounded-xl text-sm resize-y" placeholder="Detail bonus: nama, value, deskripsi singkat..."></textarea></div></div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Call to Action (CTA)</label><select id="cta" class="form-input w-full px-4 py-3 rounded-xl text-sm"><option>Beli Sekarang</option><option>Daftar Sekarang</option><option>Ambil Promonya</option><option>Konsultasi Gratis</option><option>Download Sekarang</option><option>Join Member</option><option>Klaim Voucher</option><option>Mulai Sekarang</option></select></div>
               <div><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Tipe Scarcity</label><select id="scarcity" class="form-input w-full px-4 py-3 rounded-xl text-sm"><option>Tidak Ada</option><option>Limited Time (Waktu Terbatas)</option><option>Limited Stock (Stok Terbatas)</option><option>Price Increase (Harga Akan Naik)</option><option>One-Time Offer (Hanya Sekali)</option><option>Early Bird Discount</option></select></div>
@@ -301,37 +162,19 @@
 
           <!-- 5 -->
           <div class="glass-card rounded-2xl p-6 mb-6">
-            <div class="flex items-start gap-4 mb-6">
-              <div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">5</div>
-              <div><h2 class="text-xl font-bold text-slate-800">Elemen Tambahan</h2><p class="text-sm text-slate-500 mt-1">Pilih elemen yang ingin ditambahkan di landing page.</p></div>
-            </div>
+            <div class="flex items-start gap-4 mb-6"><div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">5</div><div><h2 class="text-xl font-bold text-slate-800">Elemen Tambahan</h2><p class="text-sm text-slate-500 mt-1">Pilih elemen yang ingin ditambahkan di landing page.</p></div></div>
             <div id="elementsContainer" class="flex flex-wrap gap-2"></div>
           </div>
 
           <!-- 6 -->
           <div class="glass-card rounded-2xl p-6 mb-6">
-            <div class="flex items-start gap-4 mb-6">
-              <div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">6</div>
-              <div><h2 class="text-xl font-bold text-slate-800">Identitas Visual & Desain</h2><p class="text-sm text-slate-500 mt-1">Atur tampilan visual, warna, dan layout.</p></div>
-            </div>
+            <div class="flex items-start gap-4 mb-6"><div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">6</div><div><h2 class="text-xl font-bold text-slate-800">Identitas Visual & Desain</h2><p class="text-sm text-slate-500 mt-1">Atur tampilan visual, warna, dan layout.</p></div></div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div>
-                <label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Warna Brand Utama <span class="text-green-600">*</span></label>
-                <div class="flex gap-3 items-center">
-                  <select id="brandColor" class="form-input flex-1 px-4 py-3 rounded-xl text-sm" onchange="updateColorSwatch()">
-                    <option value="#7dd3fc">Sky Blue (Soft)</option><option value="#1e40af">Deep Ocean Blue</option><option value="#10b981" selected>Emerald Green</option><option value="#7c3aed">Royal Purple</option><option value="#f97316">Sunset Orange</option><option value="#f43f5e">Rose Pink</option><option value="#94a3b8">Neutral / Monokrom</option><option value="#eab308">Luxury Gold</option><option value="#1e293b">Midnight Black</option><option value="#dc2626">Electric Crimson</option><option value="#84cc16">Cyber Lime</option><option value="#c2410c">Terracotta Earth</option><option value="#14b8a6">Slate Teal</option><option value="#06b6d4">Neon Cyan</option><option value="#a78bfa">Soft Lavender</option><option value="#16a34a">Forest Green</option><option value="#475569">Charcoal Gray</option><option value="#facc15">Vibrant Yellow</option>
-                  </select>
-                  <div id="colorSwatch" class="w-10 h-10 rounded-xl shrink-0 shadow-sm" style="background:#10b981"></div>
-                </div>
-              </div>
+              <div><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Warna Brand Utama <span class="text-green-600">*</span></label><div class="flex gap-3 items-center"><select id="brandColor" class="form-input flex-1 px-4 py-3 rounded-xl text-sm"><option value="#7dd3fc">Sky Blue (Soft)</option><option value="#1e40af">Deep Ocean Blue</option><option value="#10b981" selected>Emerald Green</option><option value="#7c3aed">Royal Purple</option><option value="#f97316">Sunset Orange</option><option value="#f43f5e">Rose Pink</option><option value="#94a3b8">Neutral / Monokrom</option><option value="#eab308">Luxury Gold</option><option value="#1e293b">Midnight Black</option><option value="#dc2626">Electric Crimson</option><option value="#84cc16">Cyber Lime</option><option value="#c2410c">Terracotta Earth</option><option value="#14b8a6">Slate Teal</option><option value="#06b6d4">Neon Cyan</option><option value="#a78bfa">Soft Lavender</option><option value="#16a34a">Forest Green</option><option value="#475569">Charcoal Gray</option><option value="#facc15">Vibrant Yellow</option></select><div id="colorSwatch" class="w-10 h-10 rounded-xl shrink-0 shadow-sm" style="background:#10b981"></div></div></div>
               <div><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Tema Background <span class="text-green-600">*</span></label><select id="bgTheme" class="form-input w-full px-4 py-3 rounded-xl text-sm"><option>Light Mode (Terang)</option><option>Dark Mode (Gelap)</option><option>Glassmorphism</option><option>Gradient Mesh</option><option>Soft Pastel</option><option>Brutalist White</option><option>Deep Space Black</option><option>Grainy Texture</option><option>Animated Particles</option><option>Duo-tone Gradient</option><option>Minimalist Gray</option><option>Retro Paper</option></select></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div>
-                <label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Gaya Desain <span class="text-green-600">*</span></label>
-                <select id="designStyle" class="form-input w-full px-4 py-3 rounded-xl text-sm" onchange="updateDesignHint()"><option>Trust & Authority</option><option>Apple Style (Clean & Minimalist)</option><option>Modern SaaS (Techy)</option><option>Brutalist (Bold & Graphic)</option><option>Playful & Vibrant</option><option>Corporate & Professional</option><option>Luxury & Premium</option><option>Neumorphism (Soft UI)</option><option>Claymorphism (3D)</option><option>Bauhaus (Geometric)</option><option>Swiss International</option><option>Cyberpunk / Futurism</option><option>Organic & Eco-friendly</option><option>Magazine Editorial</option></select>
-                <p id="designHint" class="text-xs text-slate-500 mt-2 italic">Fokus pada testimonial, sertifikasi, dan elemen keamanan.</p>
-              </div>
+              <div><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Gaya Desain <span class="text-green-600">*</span></label><select id="designStyle" class="form-input w-full px-4 py-3 rounded-xl text-sm"><option>Trust & Authority</option><option>Apple Style (Clean & Minimalist)</option><option>Modern SaaS (Techy)</option><option>Brutalist (Bold & Graphic)</option><option>Playful & Vibrant</option><option>Corporate & Professional</option><option>Luxury & Premium</option><option>Neumorphism (Soft UI)</option><option>Claymorphism (3D)</option><option>Bauhaus (Geometric)</option><option>Swiss International</option><option>Cyberpunk / Futurism</option><option>Organic & Eco-friendly</option><option>Magazine Editorial</option></select><p id="designHint" class="text-xs text-slate-500 mt-2 italic">Fokus pada testimonial, sertifikasi, dan elemen keamanan.</p></div>
               <div><label class="block text-[11px] font-bold tracking-wider uppercase text-slate-400 mb-2">Hero Section Type <span class="text-green-600">*</span></label><select id="heroType" class="form-input w-full px-4 py-3 rounded-xl text-sm"><option>Standard (Image Samping/Belakang)</option><option>Centered (Image di Tengah)</option><option>Video Background</option><option>Split Screen (50/50)</option><option>Full Screen Image</option><option>Text Only (Minimalist)</option><option>Custom URL</option></select></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -342,10 +185,7 @@
 
           <!-- 7 -->
           <div class="glass-card rounded-2xl p-6 mb-6">
-            <div class="flex items-start gap-4 mb-6">
-              <div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">7</div>
-              <div><h2 class="text-xl font-bold text-slate-800">Fitur High-Conversion (Canggih)</h2><p class="text-sm text-slate-500 mt-1">Tambahkan fitur untuk meningkatkan konversi.</p></div>
-            </div>
+            <div class="flex items-start gap-4 mb-6"><div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">7</div><div><h2 class="text-xl font-bold text-slate-800">Fitur High-Conversion (Canggih)</h2><p class="text-sm text-slate-500 mt-1">Tambahkan fitur untuk meningkatkan konversi.</p></div></div>
             <div class="grid grid-cols-2 gap-3 mb-5">
               <label class="flex items-center gap-3 cursor-pointer text-slate-600 text-sm"><input type="checkbox" id="stickyButton" class="accent-green-600 w-4 h-4" /> Sticky Button Mobile</label>
               <label class="flex items-center gap-3 cursor-pointer text-slate-600 text-sm"><input type="checkbox" id="exitPopup" class="accent-green-600 w-4 h-4" /> Exit Intent Popup</label>
@@ -358,155 +198,154 @@
 
           <!-- 8 -->
           <div class="glass-card rounded-2xl p-6 mb-6">
-            <div class="flex items-start gap-4 mb-6">
-              <div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">8</div>
-              <div><h2 class="text-xl font-bold text-slate-800">Platform Target</h2><p class="text-sm text-slate-500 mt-1">Pilih platform yang akan digunakan.</p></div>
-            </div>
+            <div class="flex items-start gap-4 mb-6"><div class="section-number shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg text-white">8</div><div><h2 class="text-xl font-bold text-slate-800">Platform Target</h2><p class="text-sm text-slate-500 mt-1">Pilih platform yang akan digunakan.</p></div></div>
             <div id="platformContainer" class="flex flex-wrap gap-3"></div>
           </div>
 
-          <!-- Actions -->
           <div class="flex gap-3">
-            <button onclick="resetForm()" class="btn-secondary flex-1 flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-sm font-bold text-slate-500 cursor-pointer">↺ Reset</button>
-            <button onclick="generatePrompt()" class="btn-primary flex-[2] flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-base font-bold text-white cursor-pointer uppercase tracking-wider">⚡ Generate Prompt</button>
+            <button id="resetBtn" class="btn-secondary flex-1 flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-sm font-bold text-slate-500 cursor-pointer">↺ Reset</button>
+            <button id="generateBtn" class="btn-primary flex-[2] flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-base font-bold text-white cursor-pointer uppercase tracking-wider">⚡ Generate Prompt</button>
           </div>
         </div>
 
-        <!-- RIGHT COLUMN -->
         <div class="lg:sticky lg:top-20 space-y-4 animate-in">
           <div class="result-panel rounded-2xl overflow-hidden">
             <div class="flex justify-between items-center px-5 py-4 border-b border-slate-200/60">
               <div><div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Result</div><div class="text-lg font-bold text-slate-800">AI Prompt Output</div></div>
-              <button onclick="copyOutput()" id="copyBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 text-white hover:opacity-90 disabled:opacity-40 cursor-pointer transition-all" style="background:linear-gradient(135deg,#2d8a4e,#1a6b33);" disabled>📋 Salin Prompt</button>
+              <button id="copyBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 text-white hover:opacity-90 disabled:opacity-40 cursor-pointer transition-all" style="background:linear-gradient(135deg,#2d8a4e,#1a6b33);" disabled>📋 Salin Prompt</button>
             </div>
             <div id="outputArea" class="px-5 py-5 min-h-[300px] max-h-[500px] overflow-y-auto text-[13px] leading-relaxed text-slate-600 whitespace-pre-wrap break-words">
-              <div class="flex flex-col items-center justify-center h-[250px] text-slate-400">
-                <div class="w-14 h-14 rounded-full flex items-center justify-center text-2xl mb-4 border-2 border-slate-200">ℹ️</div>
-                <p class="text-center">Lengkapi formulir di sebelah kiri untuk melihat output...</p>
-              </div>
+              <div class="flex flex-col items-center justify-center h-[250px] text-slate-400"><div class="w-14 h-14 rounded-full flex items-center justify-center text-2xl mb-4 border-2 border-slate-200">ℹ️</div><p class="text-center">Lengkapi formulir di sebelah kiri untuk melihat output...</p></div>
             </div>
           </div>
-          <button onclick="openZaiChat()" class="w-full py-3.5 rounded-xl text-white text-sm font-bold flex items-center justify-center gap-2 hover:opacity-90 cursor-pointer transition-all" style="background:linear-gradient(135deg,#2d8a4e,#1a6b33);box-shadow:0 4px 20px rgba(45,138,78,0.2);">🚀 Buat Landing Page Sekarang</button>
+          <button id="zaiBtn" class="w-full py-3.5 rounded-xl text-white text-sm font-bold flex items-center justify-center gap-2 hover:opacity-90 cursor-pointer transition-all" style="background:linear-gradient(135deg,#2d8a4e,#1a6b33);box-shadow:0 4px 20px rgba(45,138,78,0.2);">🚀 Buat Landing Page Sekarang</button>
         </div>
-
       </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="text-center py-6 border-t border-slate-200/40">
-      <p class="text-xs text-slate-400">© 2026 ModalGerak. All rights reserved.</p>
-    </footer>
-
+    <footer class="text-center py-6 border-t border-slate-200/40"><p class="text-xs text-slate-400">© 2026 ModalGerak. All rights reserved.</p></footer>
   </div>
 
   <script>
-    // ─── SUPABASE AUTH ─────────────────────────────────────────────────
-    const SUPABASE_URL = 'https://scwdjnicrygjamerlswu.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjd2RqbmljcnlnamFtZXJsc3d1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjY5OTMsImV4cCI6MjA4ODg0Mjk5M30.1ovA8C9DgTp9_Wv8mV9LKfTCa7LY0uKF78yJWEbFeZ0';
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // ─── SUPABASE (use var to avoid global conflict) ───────────────────
+    var sb = window.supabase.createClient(
+      'https://scwdjnicrygjamerlswu.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjd2RqbmljcnlnamFtZXJsc3d1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjY5OTMsImV4cCI6MjA4ODg0Mjk5M30.1ovA8C9DgTp9_Wv8mV9LKfTCa7LY0uKF78yJWEbFeZ0'
+    );
 
-    (async () => {
-      const { data: { session } } = await sb.auth.getSession();
-      if (!session) { window.location.href = 'login.html'; return; }
-      initApp(session.user);
-    })();
+    sb.auth.getSession().then(function(result) {
+      if (!result.data.session) { window.location.href = 'login.html'; return; }
+      initApp(result.data.session.user);
+    });
 
     function initApp(user) {
-      const email = user.email || 'User';
-      const initial = email.charAt(0).toUpperCase();
+      var email = user.email || 'User';
+      var initial = email.charAt(0).toUpperCase();
       document.getElementById('userAvatar').textContent = initial;
       document.getElementById('userEmail').textContent = email;
       document.getElementById('dropdownEmail').textContent = email;
       document.getElementById('appContent').classList.remove('hidden');
-      setTimeout(() => {
+      setTimeout(function() {
         document.getElementById('loadingOverlay').classList.add('fade-out');
-        setTimeout(() => document.getElementById('loadingOverlay').remove(), 400);
+        setTimeout(function() { var el = document.getElementById('loadingOverlay'); if(el) el.remove(); }, 400);
       }, 300);
-      init();
+      initGenerator();
     }
 
-    let menuOpen = false;
-    function toggleUserMenu() {
+    // ─── USER MENU ─────────────────────────────────────────────────────
+    var menuOpen = false;
+    document.getElementById('userMenuBtn').addEventListener('click', function() {
       menuOpen = !menuOpen;
       document.getElementById('userDropdown').classList.toggle('hidden', !menuOpen);
-    }
-    document.addEventListener('click', e => {
-      if (menuOpen && !e.target.closest('.relative')) {
+    });
+    document.addEventListener('click', function(e) {
+      if (menuOpen && !e.target.closest('#userMenuWrapper')) {
         menuOpen = false;
         document.getElementById('userDropdown').classList.add('hidden');
       }
     });
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      sb.auth.signOut().then(function() { window.location.href = 'login.html'; });
+    });
 
-    async function handleLogout() {
-      await sb.auth.signOut();
-      window.location.href = 'login.html';
-    }
+    // ─── GENERATOR ─────────────────────────────────────────────────────
+    var PRODUCT_TYPES=[{icon:"📦",label:"Digital (Ebook / Template)"},{icon:"🎓",label:"Course / Workshop / Webinar"},{icon:"💼",label:"Service / Agency / Freelance"},{icon:"🛒",label:"Physical Product (Ecommerce)"},{icon:"💻",label:"Software / SaaS / App"},{icon:"🔑",label:"Membership / Subscription"},{icon:"🗣️",label:"Consultation / Coaching"},{icon:"🎫",label:"Event / Ticket"}];
+    var EXTRA_ELEMENTS=["Social Proof","Testimonial","FAQ","Bonus","Guarantee","Scarcity","Comparison","Pricing Table","Timeline","Team","Trust Badges","Process Steps","Video Demo","Portfolio","Order Notification"];
+    var TRUST_BADGES=["Secure Checkout","Money Back Guarantee","Free Shipping","24/7 Support","Satisfaction Guaranteed","Verified Seller","Privacy Protected","Best Price Guarantee"];
+    var PLATFORMS=["Scalev","Lynk.id","WordPress","Shopify","Custom HTML"];
+    var FRAMEWORK_HINTS={"PAS (Problem–Agitate–Solution)":"Sangat efektif untuk landing page jualan langsung.","AIDA (Attention, Interest, Desire, Action)":"Framework klasik yang terbukti.","AIDCA (Attention, Interest, Desire, Conviction, Action)":"Cocok saat audiens butuh bukti.","BAB (Before-After-Bridge)":"Ideal untuk menunjukkan transformasi.","QUEST (Qualify, Understand, Educate, Stimulate, Transition)":"Bagus untuk produk edukasi.","4Ps (Promise, Picture, Proof, Push)":"Efektif untuk produk dengan banyak testimoni.","FAB (Features, Advantages, Benefits)":"Cocok untuk SaaS dan produk teknikal.","HSO (Hook, Story, Offer)":"Powerful untuk storytelling-based selling."};
+    var DESIGN_HINTS={"Trust & Authority":"Fokus pada testimonial, sertifikasi, dan elemen keamanan.","Apple Style (Clean & Minimalist)":"Ruang putih luas, tipografi besar.","Modern SaaS (Techy)":"Gradien gelap, neon accent.","Brutalist (Bold & Graphic)":"Huruf besar, layout asimetris."};
 
-    // ─── GENERATOR DATA ────────────────────────────────────────────────
-    const PRODUCT_TYPES = [
-      { icon: "📦", label: "Digital (Ebook / Template)" },{ icon: "🎓", label: "Course / Workshop / Webinar" },
-      { icon: "💼", label: "Service / Agency / Freelance" },{ icon: "🛒", label: "Physical Product (Ecommerce)" },
-      { icon: "💻", label: "Software / SaaS / App" },{ icon: "🔑", label: "Membership / Subscription" },
-      { icon: "🗣️", label: "Consultation / Coaching" },{ icon: "🎫", label: "Event / Ticket" },
-    ];
-    const EXTRA_ELEMENTS = ["Social Proof","Testimonial","FAQ","Bonus","Guarantee","Scarcity","Comparison","Pricing Table","Timeline","Team","Trust Badges","Process Steps","Video Demo","Portfolio","Order Notification"];
-    const TRUST_BADGES = ["Secure Checkout","Money Back Guarantee","Free Shipping","24/7 Support","Satisfaction Guaranteed","Verified Seller","Privacy Protected","Best Price Guarantee"];
-    const PLATFORMS = ["Scalev","Lynk.id","WordPress","Shopify","Custom HTML"];
-    const FRAMEWORK_HINTS = {"PAS (Problem–Agitate–Solution)":"Sangat efektif untuk landing page jualan langsung.","AIDA (Attention, Interest, Desire, Action)":"Framework klasik yang terbukti.","AIDCA (Attention, Interest, Desire, Conviction, Action)":"Cocok saat audiens butuh bukti.","BAB (Before-After-Bridge)":"Ideal untuk menunjukkan transformasi.","QUEST (Qualify, Understand, Educate, Stimulate, Transition)":"Bagus untuk produk edukasi.","4Ps (Promise, Picture, Proof, Push)":"Efektif untuk produk dengan banyak testimoni.","FAB (Features, Advantages, Benefits)":"Cocok untuk SaaS dan produk teknikal.","HSO (Hook, Story, Offer)":"Powerful untuk storytelling-based selling."};
-    const DESIGN_HINTS = {"Trust & Authority":"Fokus pada testimonial, sertifikasi, dan elemen keamanan.","Apple Style (Clean & Minimalist)":"Ruang putih luas, tipografi besar.","Modern SaaS (Techy)":"Gradien gelap, neon accent.","Brutalist (Bold & Graphic)":"Huruf besar, layout asimetris."};
+    var selectedProductType="Digital (Ebook / Template)";
+    var selectedElements=new Set(["Social Proof","Testimonial","FAQ"]);
+    var selectedBadges=new Set(["Secure Checkout","Money Back Guarantee"]);
+    var selectedPlatform="Custom HTML";
+    var currentOutput="";
 
-    let selectedProductType = "Digital (Ebook / Template)";
-    let selectedElements = new Set(["Social Proof","Testimonial","FAQ"]);
-    let selectedBadges = new Set(["Secure Checkout","Money Back Guarantee"]);
-    let selectedPlatform = "Custom HTML";
-    let currentOutput = "";
+    // Wire up event listeners (NO inline onclick)
+    document.getElementById('framework').addEventListener('change', function() { document.getElementById('frameworkHint').textContent=FRAMEWORK_HINTS[this.value]||""; });
+    document.getElementById('designStyle').addEventListener('change', function() { document.getElementById('designHint').textContent=DESIGN_HINTS[this.value]||""; });
+    document.getElementById('brandColor').addEventListener('change', function() { document.getElementById('colorSwatch').style.background=this.value; });
+    document.getElementById('audience').addEventListener('change', function() {
+      var f=document.getElementById('customAudienceField');
+      if(this.value==="Custom"){f.classList.remove('hidden');f.classList.add('custom-audience-enter');document.getElementById('customAudience').focus();}
+      else{f.classList.add('hidden');document.getElementById('customAudience').value="";}
+    });
+    document.getElementById('hasBonus').addEventListener('change', function() { document.getElementById('bonusField').classList.toggle('hidden',!this.checked); });
+    document.getElementById('resetBtn').addEventListener('click', resetForm);
+    document.getElementById('generateBtn').addEventListener('click', generatePrompt);
+    document.getElementById('copyBtn').addEventListener('click', copyOutput);
+    document.getElementById('zaiBtn').addEventListener('click', openZaiChat);
 
-    function init() { renderProductTypes(); renderElements(); renderTrustBadges(); renderPlatforms(); }
-    function renderProductTypes() { document.getElementById("productTypeGrid").innerHTML = PRODUCT_TYPES.map(pt => `<button onclick="selectProductType('${pt.label}')" class="toggle-card flex flex-col items-center justify-center p-4 rounded-2xl gap-3 cursor-pointer ${selectedProductType===pt.label?'active':''}"><span class="text-2xl">${pt.icon}</span><span class="text-[11px] font-bold uppercase text-center">${pt.label}</span></button>`).join(""); }
-    function renderElements() { document.getElementById("elementsContainer").innerHTML = EXTRA_ELEMENTS.map(el => `<button onclick="toggleElement('${el}')" class="pill-btn px-4 py-2 rounded-full text-sm font-semibold cursor-pointer ${selectedElements.has(el)?'active':''}">${el}</button>`).join(""); }
-    function renderTrustBadges() { document.getElementById("trustBadgesContainer").innerHTML = TRUST_BADGES.map(b => `<button onclick="toggleBadge('${b}')" class="pill-btn px-4 py-2 rounded-full text-sm font-semibold cursor-pointer ${selectedBadges.has(b)?'active':''}">${b}</button>`).join(""); }
-    function renderPlatforms() { document.getElementById("platformContainer").innerHTML = PLATFORMS.map(p => `<button onclick="selectPlatform('${p}')" class="platform-btn px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer ${selectedPlatform===p?'active':''}">${p}</button>`).join(""); }
+    function initGenerator(){renderProductTypes();renderElements();renderTrustBadges();renderPlatforms();}
 
-    function selectProductType(t){selectedProductType=t;renderProductTypes();}
-    function toggleElement(e){selectedElements.has(e)?selectedElements.delete(e):selectedElements.add(e);renderElements();}
-    function toggleBadge(b){selectedBadges.has(b)?selectedBadges.delete(b):selectedBadges.add(b);renderTrustBadges();}
-    function selectPlatform(p){selectedPlatform=p;renderPlatforms();}
-    function toggleBonusField(){document.getElementById("bonusField").classList.toggle("hidden",!document.getElementById("hasBonus").checked);}
-    function updateFrameworkHint(){document.getElementById("frameworkHint").textContent=FRAMEWORK_HINTS[document.getElementById("framework").value]||"";}
-    function updateDesignHint(){document.getElementById("designHint").textContent=DESIGN_HINTS[document.getElementById("designStyle").value]||"";}
-    function updateColorSwatch(){document.getElementById("colorSwatch").style.background=document.getElementById("brandColor").value;}
-    function toggleCustomAudience(){const s=document.getElementById("audience"),f=document.getElementById("customAudienceField");if(s.value==="Custom"){f.classList.remove("hidden");f.classList.add("custom-audience-enter");document.getElementById("customAudience").focus();}else{f.classList.add("hidden");f.classList.remove("custom-audience-enter");document.getElementById("customAudience").value="";}}
+    // Use event delegation for dynamically rendered buttons
+    document.getElementById('productTypeGrid').addEventListener('click',function(e){var btn=e.target.closest('button');if(!btn)return;selectedProductType=btn.dataset.val;renderProductTypes();});
+    document.getElementById('elementsContainer').addEventListener('click',function(e){var btn=e.target.closest('button');if(!btn)return;var v=btn.dataset.val;selectedElements.has(v)?selectedElements.delete(v):selectedElements.add(v);renderElements();});
+    document.getElementById('trustBadgesContainer').addEventListener('click',function(e){var btn=e.target.closest('button');if(!btn)return;var v=btn.dataset.val;selectedBadges.has(v)?selectedBadges.delete(v):selectedBadges.add(v);renderTrustBadges();});
+    document.getElementById('platformContainer').addEventListener('click',function(e){var btn=e.target.closest('button');if(!btn)return;selectedPlatform=btn.dataset.val;renderPlatforms();});
 
-    function val(id){return document.getElementById(id)?.value||"";}
-    function checked(id){return document.getElementById(id)?.checked||false;}
-    function selectedText(id){const s=document.getElementById(id);return s?.options[s.selectedIndex]?.text||s?.value||"";}
-    function getAudienceValue(){const s=document.getElementById("audience");if(s.value==="Custom"){const c=val("customAudience").trim();return c||"[Custom Audience]";}return selectedText("audience");}
+    function renderProductTypes(){document.getElementById("productTypeGrid").innerHTML=PRODUCT_TYPES.map(function(pt){return '<button data-val="'+pt.label+'" class="toggle-card flex flex-col items-center justify-center p-4 rounded-2xl gap-3 cursor-pointer '+(selectedProductType===pt.label?'active':'')+'"><span class="text-2xl">'+pt.icon+'</span><span class="text-[11px] font-bold uppercase text-center">'+pt.label+'</span></button>';}).join("");}
+    function renderElements(){document.getElementById("elementsContainer").innerHTML=EXTRA_ELEMENTS.map(function(el){return '<button data-val="'+el+'" class="pill-btn px-4 py-2 rounded-full text-sm font-semibold cursor-pointer '+(selectedElements.has(el)?'active':'')+'">'+el+'</button>';}).join("");}
+    function renderTrustBadges(){document.getElementById("trustBadgesContainer").innerHTML=TRUST_BADGES.map(function(b){return '<button data-val="'+b+'" class="pill-btn px-4 py-2 rounded-full text-sm font-semibold cursor-pointer '+(selectedBadges.has(b)?'active':'')+'">'+b+'</button>';}).join("");}
+    function renderPlatforms(){document.getElementById("platformContainer").innerHTML=PLATFORMS.map(function(p){return '<button data-val="'+p+'" class="platform-btn px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer '+(selectedPlatform===p?'active':'')+'">'+p+'</button>';}).join("");}
+
+    function val(id){return document.getElementById(id).value||"";}
+    function isChecked(id){return document.getElementById(id).checked;}
+    function selectedText(id){var s=document.getElementById(id);return s.options[s.selectedIndex].text;}
+    function getAudienceValue(){var s=document.getElementById("audience");if(s.value==="Custom"){var c=document.getElementById("customAudience").value.trim();return c||"[Custom Audience]";}return selectedText("audience");}
 
     function generatePrompt(){
-      const features=[];
-      if(checked("stickyButton"))features.push("Sticky Button Mobile");
-      if(checked("exitPopup"))features.push("Exit Intent Popup");
-      if(checked("whatsappButton"))features.push("Floating WhatsApp Button");
-      if(checked("countdownTimer"))features.push("Urgency Countdown Timer");
-      currentOutput=`You are an elite landing page copywriter and UI/UX designer. Generate a COMPLETE, production-ready landing page based on these specifications:\n\n## FRAMEWORK & TONE\n- Copywriting Framework: ${val("framework")}\n- Tone of Voice: ${selectedText("tone")}\n\n## PRODUCT DETAILS\n- Product Type: ${selectedProductType}\n- Product Name: ${val("productName")||"[Product Name]"}\n- Normal Price: ${val("normalPrice")||"N/A"}\n- Promo Price: ${val("promoPrice")||"N/A"}\n- Description & Benefits: ${val("description")||"[Benefits]"}\n- Customer Objections: ${val("objections")||"[Objections]"}\n${checked("hasBonus")?`- Bonus Details: ${val("bonusDetails")||"[Bonus details]"}\n`:""}\n## TARGET MARKET\n- Goal: ${selectedText("goal")}\n- Awareness Level: ${selectedText("awareness")}\n- Target Audience: ${getAudienceValue()}\n- Pain Points: ${val("painPoints")||"[Pain points]"}\n\n## CTA & SCARCITY\n- Call to Action: ${selectedText("cta")}\n- Scarcity Type: ${selectedText("scarcity")}\n\n## SECTIONS TO INCLUDE\n${[...selectedElements].map(e=>`- ${e}`).join("\n")}\n\n## VISUAL & DESIGN\n- Brand Color: ${selectedText("brandColor")}\n- Background Theme: ${selectedText("bgTheme")}\n- Design Style: ${selectedText("designStyle")}\n- Hero Section: ${selectedText("heroType")}\n- Hero Mockup: ${selectedText("mockupType")}\n- Section Illustrations: ${selectedText("illustrationType")}\n\n## HIGH-CONVERSION FEATURES\n${features.length?features.map(f=>`- ${f}`).join("\n"):"- None selected"}\n- Trust Badges: ${[...selectedBadges].join(", ")||"None"}\n\n## PLATFORM TARGET\n- ${selectedPlatform}\n\nGenerate complete HTML/CSS code for this landing page with inline styles. Make it modern, conversion-optimized, and mobile-responsive. Include all sections listed above with compelling copywriting based on the ${val("framework")} framework.`;
+      var features=[];
+      if(isChecked("stickyButton"))features.push("Sticky Button Mobile");
+      if(isChecked("exitPopup"))features.push("Exit Intent Popup");
+      if(isChecked("whatsappButton"))features.push("Floating WhatsApp Button");
+      if(isChecked("countdownTimer"))features.push("Urgency Countdown Timer");
+      var els=[];selectedElements.forEach(function(e){els.push("- "+e);});
+      var badges=[];selectedBadges.forEach(function(b){badges.push(b);});
+
+      currentOutput="You are an elite landing page copywriter and UI/UX designer. Generate a COMPLETE, production-ready landing page based on these specifications:\n\n## FRAMEWORK & TONE\n- Copywriting Framework: "+val("framework")+"\n- Tone of Voice: "+selectedText("tone")+"\n\n## PRODUCT DETAILS\n- Product Type: "+selectedProductType+"\n- Product Name: "+(val("productName")||"[Product Name]")+"\n- Normal Price: "+(val("normalPrice")||"N/A")+"\n- Promo Price: "+(val("promoPrice")||"N/A")+"\n- Description & Benefits: "+(val("description")||"[Benefits]")+"\n- Customer Objections: "+(val("objections")||"[Objections]")+"\n"+(isChecked("hasBonus")?"- Bonus Details: "+(val("bonusDetails")||"[Bonus details]")+"\n":"")+"\n## TARGET MARKET\n- Goal: "+selectedText("goal")+"\n- Awareness Level: "+selectedText("awareness")+"\n- Target Audience: "+getAudienceValue()+"\n- Pain Points: "+(val("painPoints")||"[Pain points]")+"\n\n## CTA & SCARCITY\n- Call to Action: "+selectedText("cta")+"\n- Scarcity Type: "+selectedText("scarcity")+"\n\n## SECTIONS TO INCLUDE\n"+els.join("\n")+"\n\n## VISUAL & DESIGN\n- Brand Color: "+selectedText("brandColor")+"\n- Background Theme: "+selectedText("bgTheme")+"\n- Design Style: "+selectedText("designStyle")+"\n- Hero Section: "+selectedText("heroType")+"\n- Hero Mockup: "+selectedText("mockupType")+"\n- Section Illustrations: "+selectedText("illustrationType")+"\n\n## HIGH-CONVERSION FEATURES\n"+(features.length?features.map(function(f){return "- "+f;}).join("\n"):"- None selected")+"\n- Trust Badges: "+(badges.join(", ")||"None")+"\n\n## PLATFORM TARGET\n- "+selectedPlatform+"\n\nGenerate complete HTML/CSS code for this landing page with inline styles. Make it modern, conversion-optimized, and mobile-responsive.";
+
       document.getElementById("outputArea").textContent=currentOutput;
       document.getElementById("copyBtn").disabled=false;
     }
 
-    function copyOutput(){if(!currentOutput)return;navigator.clipboard.writeText(currentOutput).then(()=>{const b=document.getElementById("copyBtn");b.textContent="✅ Copied!";setTimeout(()=>{b.innerHTML="📋 Salin Prompt";},2000);});}
+    function copyOutput(){if(!currentOutput)return;navigator.clipboard.writeText(currentOutput).then(function(){var b=document.getElementById("copyBtn");b.textContent="✅ Copied!";setTimeout(function(){b.innerHTML="📋 Salin Prompt";},2000);});}
     function openZaiChat(){if(!currentOutput)generatePrompt();window.open("https://chat.z.ai/?q="+encodeURIComponent(currentOutput),"_blank");}
 
     function resetForm(){
-      document.querySelectorAll("select").forEach(s=>s.selectedIndex=0);
-      document.querySelectorAll("input[type='text'],textarea").forEach(e=>e.value="");
-      document.querySelectorAll("input[type='checkbox']").forEach(e=>e.checked=false);
+      document.querySelectorAll("select").forEach(function(s){s.selectedIndex=0;});
+      document.querySelectorAll("input[type='text'],textarea").forEach(function(e){e.value="";});
+      document.querySelectorAll("input[type='checkbox']").forEach(function(e){e.checked=false;});
       selectedProductType="Digital (Ebook / Template)";selectedElements=new Set(["Social Proof","Testimonial","FAQ"]);
       selectedBadges=new Set(["Secure Checkout","Money Back Guarantee"]);selectedPlatform="Custom HTML";currentOutput="";
       renderProductTypes();renderElements();renderTrustBadges();renderPlatforms();
-      toggleBonusField();updateFrameworkHint();updateDesignHint();updateColorSwatch();
+      document.getElementById("bonusField").classList.add("hidden");
       document.getElementById("customAudienceField").classList.add("hidden");
       document.getElementById("customAudience").value="";
-      document.getElementById("outputArea").innerHTML=`<div class="flex flex-col items-center justify-center h-[250px] text-slate-400"><div class="w-14 h-14 rounded-full flex items-center justify-center text-2xl mb-4 border-2 border-slate-200">ℹ️</div><p class="text-center">Lengkapi formulir di sebelah kiri untuk melihat output...</p></div>`;
+      document.getElementById("frameworkHint").textContent=FRAMEWORK_HINTS["PAS (Problem–Agitate–Solution)"];
+      document.getElementById("designHint").textContent=DESIGN_HINTS["Trust & Authority"];
+      document.getElementById("colorSwatch").style.background="#10b981";
+      document.getElementById("outputArea").innerHTML='<div class="flex flex-col items-center justify-center h-[250px] text-slate-400"><div class="w-14 h-14 rounded-full flex items-center justify-center text-2xl mb-4 border-2 border-slate-200">ℹ️</div><p class="text-center">Lengkapi formulir di sebelah kiri untuk melihat output...</p></div>';
       document.getElementById("copyBtn").disabled=true;
     }
   </script>
